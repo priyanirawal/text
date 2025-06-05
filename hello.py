@@ -18,14 +18,20 @@ while i>0:
             total_lines = f.readlines()
             print("The number of tasks in your list are:", len(total_lines))
     elif user == "4":
-        with open("tasks.txt", "r") as f:
+        with open("tasks.txt", "r+") as f:
             num_tasks = f.readlines()
             deletion = int(input("What number task do you want to delete?\n"))
+            print(deletion)
+            print(num_tasks)
             if 1 <= deletion <= len(num_tasks):
                 del num_tasks[deletion-1]
-                print("Task number",deletion,"was deleted.")
                 with open("tasks.txt", "w") as f:
-                    f.writelines(num_tasks)
+                    for i, task in enumerate(num_tasks):
+                        new_num = task.split(". ")
+                        last_element = new_num[1]
+                        f.write(str(i+1)+". "+last_element)
+                    print("Task number",deletion,"was deleted.")
+
             else:
                 print("Invalid task number.")
     else:
